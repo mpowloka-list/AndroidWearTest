@@ -1,9 +1,12 @@
 package com.example.mpowloka.androidweartest
 
-import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.support.wearable.activity.WearableActivity
+import android.util.Log
+import com.example.mpowloka.androidweartest.model.City
+import com.example.mpowloka.androidweartest.model.Item
 import com.example.mpowloka.androidweartest.model.ListonicDatabase
+import com.example.mpowloka.androidweartest.model.Person
 
 class MainActivity : WearableActivity() {
 
@@ -12,6 +15,32 @@ class MainActivity : WearableActivity() {
         setContentView(R.layout.activity_main)
         setAmbientEnabled()
 
-        val database = Room.inMemoryDatabaseBuilder(this.applicationContext, ListonicDatabase::class.java)
+        val database = ListonicDatabase.getDatabase(this.applicationContext)
+
+        database.cityDao.insert(listOf(
+                City(name = "Lodz"),
+                City(name = "Salt Lake City"),
+                City(name = "Moscow"))
+        )
+
+        database.personDao.insert(listOf(
+                Person(name = "Michal", surname = "Powloka", age = 21),
+                Person(name = "Bill", surname = "Cypher", age = 42, cityId = 3))
+        )
+
+        database.itemDao.insert(*arrayOf(
+                Item(name = "Hammer", price = 42.toDouble()),
+                Item(name = "Cake", price = 15.70)
+        ))
+
+        Log.i(TAG, database.cityDao.getAll().joinToString(separator = "\n"))
+        Log.i(TAG, database.personDao.getAll().joinToString(separator = "\n"))
+        Log.i(TAG, database.itemDao.getAll().joinToString(separator = "\n"))
+
+
+    }
+
+    companion object {
+        const val TAG = "MainActivity"
     }
 }
