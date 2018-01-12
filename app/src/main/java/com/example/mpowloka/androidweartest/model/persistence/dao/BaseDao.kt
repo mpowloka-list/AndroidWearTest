@@ -7,39 +7,40 @@ import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Transaction
 import android.arch.persistence.room.Update
+import com.example.mpowloka.androidweartest.model.interfaces.Provider
 
 /**
  * Created in Listonic by mpowloka on 11.01.2018.
  */
 
-abstract class BaseDao<T: Any> {
+abstract class BaseDao<T: Any> : Provider<T> {
 
     @Insert
-    abstract fun insert(vararg args: T): Array<Long>
+    override abstract fun insert(vararg args: T): Array<Long>
 
     @Insert
-    abstract fun insert(arg: T) : Long
+    override abstract fun insert(arg: T) : Long
 
     @Transaction
-    open fun insert(args: List<T>) = args.forEach{insert(it)}
+    override fun insert(args: List<T>) = args.forEach{insert(it)}
 
     @Update
-    abstract fun update(vararg args: T): Int
+    override abstract fun update(vararg args: T): Int
 
     @Update
-    abstract fun update(arg: T)
+    override abstract fun update(arg: T)
 
     @Transaction
-    open fun update(args: List<T>) = args.forEach{update(it)}
+    override fun update(args: List<T>) = args.forEach{update(it)}
 
     @Delete
-    abstract fun delete(vararg args: T): Int
+    override abstract fun delete(vararg args: T): Int
 
     @Delete
-    abstract fun delete(arg: T)
+    override abstract fun delete(arg: T)
 
     @Transaction
-    open fun delete(args: List<T>) = args.forEach{delete(it)}
+    override fun delete(args: List<T>) = args.forEach{delete(it)}
 
     protected fun <I: Any> LiveData<I>.getDistinct(): LiveData<I> {
 

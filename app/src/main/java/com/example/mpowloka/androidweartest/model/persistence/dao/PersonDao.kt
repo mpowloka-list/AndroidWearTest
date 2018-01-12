@@ -8,27 +8,28 @@ import android.arch.persistence.room.Transaction
 import com.example.mpowloka.androidweartest.model.persistence.Item
 import com.example.mpowloka.androidweartest.model.persistence.Person
 import com.example.mpowloka.androidweartest.model.persistence.PersonItemJoin
+import com.example.mpowloka.androidweartest.model.interfaces.PersonsProvider
 
 /**
  * Created in Listonic by mpowloka on 11.01.2018.
  */
 
 @Dao
-abstract class PersonDao: BaseDao<Person>() {
+abstract class PersonDao: BaseDao<Person>(), PersonsProvider {
 
     @Query (value = "SELECT * FROM $TABLE_NAME")
-    abstract fun getAll(): List<Person>
+    override abstract fun getAll(): List<Person>
 
     @Query (value = "SELECT * FROM $TABLE_NAME WHERE $ID_COL = :arg0")
-    abstract fun getById(id: Int): Person
+    override abstract fun getById(id: Int): Person
 
     @Query (value = "SELECT $NAME_COL, $SURNAME_COL FROM $TABLE_NAME WHERE $ID_COL = :arg0")
-    abstract fun getFullNameById(id: Int) : FullName
+    override abstract fun getFullNameById(id: Int) : PersonsProvider.FullName
 
     @Query (value = "SELECT $SURNAME_COL FROM $TABLE_NAME")
     protected abstract fun getAllSurnamesProt(): LiveData<String>
 
-    fun getAllSurnames() = getAllSurnamesProt().getDistinct()
+    override fun getAllSurnames() = getAllSurnamesProt().getDistinct()
 
     @Query (value = """
         SELECT i.*
@@ -38,18 +39,13 @@ abstract class PersonDao: BaseDao<Person>() {
         """)
     protected abstract fun getPersonItemsProt(personId: Int): List<Item>
 
-    fun getPersonItems(person: Person) = getPersonItemsProt(person.id!!)
+    override fun getPersonItems(person: Person) = getPersonItemsProt(person.id!!)
 
     @Insert
     protected abstract fun addItemToPersonProt(personItemJoin: PersonItemJoin)
 
     @Transaction
-    open fun addItemsToPerson(person: Person, vararg items: Item) = items.forEach{ addItemToPersonProt(PersonItemJoin(person.id!!, it.id!!)) }
-
-    class FullName(
-            var name: String = "",
-            var surname: String = ""
-    )
+    override fun addItemsToPerson(person: Person, vararg items: Item) = items.forEach{ addItemToPersonProt(PersonItemJoin(person.id!!, it.id!!)) }
 
  companion object {
      const val TABLE_NAME = "persons"

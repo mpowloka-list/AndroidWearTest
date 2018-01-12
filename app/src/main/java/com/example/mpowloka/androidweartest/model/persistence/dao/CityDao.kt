@@ -2,6 +2,7 @@ package com.example.mpowloka.androidweartest.model.persistence.dao
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
+import com.example.mpowloka.androidweartest.model.interfaces.CitiesProvider
 import com.example.mpowloka.androidweartest.model.persistence.City
 import com.example.mpowloka.androidweartest.model.persistence.dao.BaseDao
 
@@ -10,13 +11,13 @@ import com.example.mpowloka.androidweartest.model.persistence.dao.BaseDao
  */
 
 @Dao
-abstract class CityDao : BaseDao<City>() {
+abstract class CityDao : BaseDao<City>(), CitiesProvider {
 
     @Query (value = "SELECT * FROM $TABLE_NAME")
-    abstract fun getAll(): List<City>
+    override abstract fun getAll(): List<City>
 
     @Query (value = "SELECT * FROM $TABLE_NAME WHERE $ID_COL = :arg0")
-    abstract fun getById(id: Int): City
+    override abstract fun getById(id: Int): City
 
     companion object {
         const val TABLE_NAME = "cities"

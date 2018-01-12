@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.support.wearable.activity.WearableActivity
 import android.util.Log
 import com.example.mpowloka.androidweartest.R
-import com.example.mpowloka.androidweartest.model.persistence.*
+import com.example.mpowloka.androidweartest.model.ModelManagerImpl
+import com.example.mpowloka.androidweartest.model.persistence.City
+import com.example.mpowloka.androidweartest.model.persistence.Item
+import com.example.mpowloka.androidweartest.model.persistence.Person
 
 class MainActivity : WearableActivity() {
 
@@ -13,38 +16,24 @@ class MainActivity : WearableActivity() {
         setContentView(R.layout.activity_main)
         setAmbientEnabled()
 
-        val database = ListonicDatabase.getDatabase(this.applicationContext)
+        val modelManager = ModelManagerImpl.getInstance(this.applicationContext)
 
-        database.cityDao.insert(listOf(
-                City(name = "Lodz"),
-                City(name = "Salt Lake City"),
-                City(name = "Moscow")
-        ))
+        //Dummy data
+        val michal = Person(id = 1, name = "Michal", surname = "Powloka", age = 21, cityId = 1)
+        val hook = Item(id = 1, name = "Grappling hook", price = 42.50)
+        val lodz = City(id = 1, name = "Lodz")
 
-        database.personDao.insert(listOf(
-                Person(name = "Michal", surname = "Powloka", age = 21),
-                Person(name = "Bill", surname = "Cypher", age = 42, cityId = 3)
-        ))
+        modelManager.citiesProvider.insert(lodz)
+        modelManager.personsProvider.insert(michal)
+        modelManager.itemsProvider.insert(hook)
+        modelManager.personsProvider.addItemsToPerson(michal, hook)
 
-        database.itemDao.insert(
-                Item(name = "Hammer", price = 42.toDouble()),
-                Item(name = "Cake", price = 15.70),
-                Item(5,"Mallet", 100.toDouble()),
-                Item(6,"Grappling hook", 42.toDouble())
-        )
+        Log.i(TAG,"""
+            ${modelManager.personsProvider.getAll()},
+            ${modelManager.citiesProvider.getAll()},
+            ${modelManager.itemsProvider.getAll()}
+        """.trimIndent())
 
-        database.personDao.addItemsToPerson(
-                Person(1,"Michal","Powloka","",21,null),
-                Item(5,"Mallet", 100.toDouble()),
-                Item(6,"Grappling hook", 42.toDouble())
-        )
-
-        Log.i(TAG, database.cityDao.getAll().joinToString(separator = "\n"))
-        Log.i(TAG, database.personDao.getAll().joinToString(separator = "\n"))
-        Log.i(TAG, database.itemDao.getAll().joinToString(separator = "\n"))
-        Log.i(TAG, database.personDao.getPersonItems(
-                Person(1,"Michal", "Powloka", "", 21, null)
-        ).joinToString(separator = "\n"))
     }
 
     companion object {
