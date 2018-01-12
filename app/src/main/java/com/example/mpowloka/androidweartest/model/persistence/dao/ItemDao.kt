@@ -1,8 +1,9 @@
-package com.example.mpowloka.androidweartest.model.dao
+package com.example.mpowloka.androidweartest.model.persistence.dao
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
-import com.example.mpowloka.androidweartest.model.Item
+import com.example.mpowloka.androidweartest.model.persistence.Item
+import com.example.mpowloka.androidweartest.model.persistence.dao.BaseDao
 
 /**
  * Created in Listonic by mpowloka on 11.01.2018.
@@ -11,11 +12,13 @@ import com.example.mpowloka.androidweartest.model.Item
 @Dao
 abstract class ItemDao: BaseDao<Item>() {
 
-    @Query(value = "SELECT * FROM $TABLE_NAME")
+    @Query(value = "SELECT * FROM ${TABLE_NAME}")
     abstract fun getAll(): List<Item>
 
-    @Query(value = "SELECT * FROM $TABLE_NAME WHERE $ID_COL = :arg0")
+    @Query(value = "SELECT * FROM ${TABLE_NAME} WHERE ${ID_COL} = :arg0")
     abstract fun getById(id: Int): Item
+
+
 
     companion object {
         const val TABLE_NAME = "items"

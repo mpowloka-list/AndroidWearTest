@@ -12,6 +12,15 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+
+        }
+
     }
     buildTypes {
         release {
@@ -31,6 +40,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.android.support:wear:26.1.0'
     compileOnly 'com.google.android.wearable:wearable:2.1.0'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
 
     // Room
     implementation "android.arch.persistence.room:runtime:1.0.0"
@@ -43,5 +53,6 @@ dependencies {
 
     // KotlinTest
     testCompile group: 'io.kotlintest', name: 'kotlintest', version: '2.0.7'
+    androidTestCompile group: 'io.kotlintest', name: 'kotlintest', version: '2.0.7'
 
 }

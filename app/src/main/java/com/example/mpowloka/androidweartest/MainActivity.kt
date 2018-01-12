@@ -3,10 +3,10 @@ package com.example.mpowloka.androidweartest
 import android.os.Bundle
 import android.support.wearable.activity.WearableActivity
 import android.util.Log
-import com.example.mpowloka.androidweartest.model.City
-import com.example.mpowloka.androidweartest.model.Item
-import com.example.mpowloka.androidweartest.model.ListonicDatabase
-import com.example.mpowloka.androidweartest.model.Person
+import com.example.mpowloka.androidweartest.model.persistence.City
+import com.example.mpowloka.androidweartest.model.persistence.Item
+import com.example.mpowloka.androidweartest.model.persistence.ListonicDatabase
+import com.example.mpowloka.androidweartest.model.persistence.Person
 
 class MainActivity : WearableActivity() {
 

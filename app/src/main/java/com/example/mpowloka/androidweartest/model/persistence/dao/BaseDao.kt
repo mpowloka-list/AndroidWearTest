@@ -1,4 +1,4 @@
-package com.example.mpowloka.androidweartest.model.dao
+package com.example.mpowloka.androidweartest.model.persistence.dao
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
