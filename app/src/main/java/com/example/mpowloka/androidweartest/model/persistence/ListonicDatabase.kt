@@ -7,6 +7,7 @@ import android.content.Context
 import com.example.mpowloka.androidweartest.model.persistence.dao.CityDao
 import com.example.mpowloka.androidweartest.model.persistence.dao.ItemDao
 import com.example.mpowloka.androidweartest.model.persistence.dao.PersonDao
+import com.example.mpowloka.androidweartest.model.persistence.dao.PersonItemJoinDao
 import com.example.mpowloka.androidweartest.model.persistence.migrations.MIGRATION_1_2
 
 /**
@@ -22,6 +23,7 @@ abstract class ListonicDatabase : RoomDatabase(){
     abstract val personDao: PersonDao
     abstract val cityDao: CityDao
     abstract val itemDao: ItemDao
+    abstract val personItemJoinDao: PersonItemJoinDao
 
     companion object {
         private const val DB_NAME = "listonic_database"

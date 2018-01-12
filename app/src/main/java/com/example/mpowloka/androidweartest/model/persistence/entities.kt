@@ -14,14 +14,14 @@ import com.example.mpowloka.androidweartest.model.persistence.dao.PersonDao
         foreignKeys =
             [ForeignKey(entity = City::class, parentColumns = [CityDao.ID_COL], childColumns = [PersonDao.CITY_ID_COL], onDelete = ForeignKey.SET_NULL)],
         indices =
-            [Index(value = PersonDao.CITY_ID_COL, name = "person_to_city")]
+            [Index(value = [PersonDao.CITY_ID_COL], name = "person_to_city")]
 )
 data class Person (
         @PrimaryKey var id: Int? = null,
         var name: String = "",
         var surname: String = "",
         var description: String = "",
-        var age: Int = -1,
+        var age: Int = 0,
         @ColumnInfo(name = PersonDao.CITY_ID_COL) var cityId: Int? = null
 )
 
@@ -51,8 +51,8 @@ data class City(
             ForeignKey(entity = Item::class, childColumns = ["item_id"], parentColumns = ["id"], onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)
         ],
         indices = [
-            Index(value = "person_id", name = "pij_to_persons"),
-            Index(value = "item_id", name = "pij_to_items")
+            Index(value = ["person_id"], name = "pij_to_persons"),
+            Index(value = ["item_id"], name = "pij_to_items")
         ],
         primaryKeys = ["person_id", "item_id"]
 )

@@ -12,10 +12,10 @@ import com.example.mpowloka.androidweartest.model.persistence.dao.BaseDao
 @Dao
 abstract class ItemDao: BaseDao<Item>() {
 
-    @Query(value = "SELECT * FROM ${TABLE_NAME}")
+    @Query(value = "SELECT * FROM $TABLE_NAME")
     abstract fun getAll(): List<Item>
 
-    @Query(value = "SELECT * FROM ${TABLE_NAME} WHERE ${ID_COL} = :arg0")
+    @Query(value = "SELECT * FROM $TABLE_NAME WHERE $ID_COL = :arg0")
     abstract fun getById(id: Int): Item
 
 
