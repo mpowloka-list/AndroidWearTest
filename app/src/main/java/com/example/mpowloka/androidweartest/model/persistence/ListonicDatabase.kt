@@ -33,8 +33,9 @@ abstract class ListonicDatabase : RoomDatabase(){
         fun getDatabase(context: Context): ListonicDatabase {
             if(INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context, ListonicDatabase::class.java, DB_NAME)
-                        .allowMainThreadQueries()
                         .addMigrations(*migrations)
+                        .addCallback(LogsTableCreator)
+                        .addCallback(TriggersInitializer)
                         .build()
             }
             return INSTANCE!!
@@ -42,5 +43,7 @@ abstract class ListonicDatabase : RoomDatabase(){
 
 
     }
+
+
 
 }
