@@ -18,7 +18,7 @@ import com.example.mpowloka.androidweartest.model.persistence.migrations.MIGRATI
         entities = [Person::class, Item::class, City::class, PersonItemJoin::class],
         version = 2
 )
-abstract class ListonicDatabase : RoomDatabase(){
+abstract class ListonicDatabase : RoomDatabase() {
 
     abstract val personDao: PersonDao
     abstract val cityDao: CityDao
@@ -31,7 +31,7 @@ abstract class ListonicDatabase : RoomDatabase(){
         private var INSTANCE: ListonicDatabase? = null
 
         fun getDatabase(context: Context): ListonicDatabase {
-            if(INSTANCE == null) {
+            if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context, ListonicDatabase::class.java, DB_NAME)
                         .addMigrations(*migrations)
                         .addCallback(LogsTableCreator)
@@ -40,10 +40,5 @@ abstract class ListonicDatabase : RoomDatabase(){
             }
             return INSTANCE!!
         }
-
-
     }
-
-
-
 }

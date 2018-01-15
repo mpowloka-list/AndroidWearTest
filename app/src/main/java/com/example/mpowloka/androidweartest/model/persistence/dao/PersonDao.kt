@@ -27,7 +27,7 @@ abstract class PersonDao: BaseDao<Person>(), PersonsProvider {
     override abstract fun getFullNameById(id: Int) : PersonsProvider.FullName
 
     @Query (value = "SELECT $SURNAME_COL FROM $TABLE_NAME")
-    protected abstract fun getAllSurnamesProt(): LiveData<String>
+    protected abstract fun getAllSurnamesProt(): LiveData<List<String>>
 
     override fun getAllSurnames() = getAllSurnamesProt().getDistinct()
 

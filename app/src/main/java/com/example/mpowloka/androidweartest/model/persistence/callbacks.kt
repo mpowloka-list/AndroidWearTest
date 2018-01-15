@@ -33,4 +33,6 @@ object TriggersInitializer : RoomDatabase.Callback() {
         """.trimIndent())
 
     }
+
+
 }

@@ -13,7 +13,7 @@ interface PersonsProvider : Provider<Person>{
     fun getAll() : List<Person>
     fun getById(id: Int) : Person
     fun getFullNameById(id: Int) : FullName
-    fun getAllSurnames() : LiveData<String>
+    fun getAllSurnames() : LiveData<List<String>>
     fun getPersonItems(person: Person) : List<Item>
     fun addItemsToPerson(person: Person, vararg items: Item)
 

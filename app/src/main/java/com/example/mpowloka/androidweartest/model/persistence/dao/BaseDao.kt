@@ -5,6 +5,7 @@ import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.Observer
 import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
+
 import android.arch.persistence.room.Transaction
 import android.arch.persistence.room.Update
 import com.example.mpowloka.androidweartest.model.interfaces.Provider

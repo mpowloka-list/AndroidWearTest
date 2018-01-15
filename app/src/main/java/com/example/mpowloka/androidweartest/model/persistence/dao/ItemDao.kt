@@ -1,5 +1,6 @@
 package com.example.mpowloka.androidweartest.model.persistence.dao
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 import com.example.mpowloka.androidweartest.model.persistence.Item
@@ -13,7 +14,9 @@ import com.example.mpowloka.androidweartest.model.interfaces.ItemsProvider
 abstract class ItemDao: BaseDao<Item>(), ItemsProvider{
 
     @Query(value = "SELECT * FROM $TABLE_NAME")
-    override abstract fun getAll(): List<Item>
+    abstract fun getAllProt(): LiveData<List<Item>>
+
+    override fun getAll(): LiveData<List<Item>> = getAllProt().getDistinct()
 
     @Query(value = "SELECT * FROM $TABLE_NAME WHERE $ID_COL = :arg0")
     override abstract fun getById(id: Int): Item
